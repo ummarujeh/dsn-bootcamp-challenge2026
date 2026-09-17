@@ -14,6 +14,20 @@ A predictive model for DSN Mart to forecast total product-store sales for the DS
 
 ---
 
+## ✅ Final Project Status
+
+This project successfully built and validated a sales forecasting pipeline for DSN Mart using a time-aware machine learning workflow. The work includes exploratory analysis, feature engineering, a baseline LightGBM model, and a final improvement stage with engineered features, categorical target encoding, lag/rolling features, and Optuna-based hyperparameter tuning.
+
+The validated notebook in [notebooks/04_Model_Improvements.ipynb](notebooks/04_Model_Improvements.ipynb) produced strong results under time-series cross-validation:
+
+- Improved-feature LightGBM CV RMSE: 1116.49
+- Optuna-tuned LightGBM best CV RMSE: 1025.61
+- XGBoost comparison mean CV RMSE: 1115.81
+
+The project is now considered complete and reproducible, with the best current prediction artifact saved in [submissions/submission_v3.csv](submissions/submission_v3.csv). The repo reflects the finalized workflow, validated model results, and milestone tracking in [PROGRESS.md](PROGRESS.md).
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -154,5 +168,5 @@ For competition questions, refer to the official hackathon guidelines.
 
 ---
 
-**Last Updated**: 2026-09-09  
-**Status**: In Progress 🔄
+**Last Updated**: 2026-09-17  
+**Status**: Completed ✅
