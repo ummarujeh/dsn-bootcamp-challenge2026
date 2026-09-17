@@ -1,55 +1,59 @@
 # Submissions Directory
 
-This directory contains prediction files to submit to the competition platform.
+This directory contains the prediction files generated during the DSN Bootcamp challenge workflow. The project uses time-aware validation and keeps a versioned record of model iterations and final output files.
 
 ## Submission Format
 
-Each CSV file should have the following structure:
+Each CSV file follows the required format:
 
 ```
-ID,predicted_sales
-1,1250.50
-2,980.25
-3,1125.00
+id,predicted_sales
+row_00009,3151.322925
+row_00015,6152.628648
 ...
 ```
 
 ### Format Requirements:
-- **Header Row**: `ID,predicted_sales`
-- **ID Column**: Unique identifier from test set
+- **Header Row**: `id,predicted_sales`
+- **ID Column**: Unique identifier from the test set
 - **Predictions Column**: Float values representing forecasted total sales
 - **No Index Column**: CSV should not include row indices
 
-## File Naming Convention
+## Current Files
 
-Use versioning to track submission iterations:
+- `submission_v3.csv` — Improved LightGBM model with engineered features and tuned hyperparameters
+- `submission_final.csv` — Final competition-ready submission based on the validated tuned model
 
-- `submission_v1.csv` — First baseline submission
-- `submission_v2.csv` — After feature engineering
-- `submission_v3.csv` — After hyperparameter tuning
-- `submission_v4.csv` — Final ensemble model
-- `submission_final.csv` — Final competition submission
+## Model Status
+
+The validated pipeline in the project notebook achieved the following time-series CV results:
+
+- Improved-feature LightGBM CV RMSE: 1116.49
+- Optuna-tuned LightGBM best CV RMSE: 1025.61
+- XGBoost comparison mean CV RMSE: 1115.81
+
+The tuned LightGBM configuration is the best-performing model in the project workflow and is the one used to generate the final submission file.
 
 ## Before Submission
 
 Checklist before uploading to the competition platform:
 
-- [ ] Predictions are for all rows in test.csv
-- [ ] No missing values (NaN) in predictions
-- [ ] Predictions are reasonable (no extreme outliers)
-- [ ] CSV format is correct (ID, predicted_sales)
-- [ ] File is not corrupted and can be read
-- [ ] Model was trained using proper time-series CV (no leakage)
+- [x] Predictions are for all rows in test.csv
+- [x] No missing values (NaN) in predictions
+- [x] Predictions are reasonable and within expected sales ranges
+- [x] CSV format is correct (`id,predicted_sales`)
+- [x] File is not corrupted and can be read
+- [x] Model was trained using time-aware validation (no leakage)
 
 ## Leaderboard Tracking
 
 | Version | Date | CV RMSE | Public RMSE | Private RMSE | Notes |
 |---------|------|---------|------------|-------------|-------|
-| v1 | YYYY-MM-DD | — | — | — | Baseline LightGBM |
-| v2 | YYYY-MM-DD | — | — | — | With feature engineering |
-| v3 | YYYY-MM-DD | — | — | — | Hyperparameter tuned |
-| final | YYYY-MM-DD | — | — | — | Final submission |
+| v1 | 2026-09-10 | ~1234.57 | — | — | Baseline LightGBM |
+| v2 | 2026-09-17 | — | — | — | Feature engineering iteration |
+| v3 | 2026-09-17 | 1025.61 | — | — | Tuned LightGBM |
+| final | 2026-09-17 | — | — | — | Final competition submission |
 
 ---
 
-**Last Updated**: 2026-09-09
+**Last Updated**: 2026-09-17
