@@ -10,7 +10,7 @@ notebook_path = repo_root / 'notebooks' / '04_Model_Improvements.ipynb'
 
 cells = [
     nbf.v4.new_markdown_cell(
-        '# 04. Model Improvements\n## DSN Bootcamp Challenge: Sales Forecasting\n\n**Milestone**: 5 - Model Improvements\n\n**Objective**: Improve the baseline LightGBM model with feature engineering, time-aware validation, Optuna tuning, and a simple ensemble.\n\n**Metric**: RMSE\n\n---'
+        '# 04. Model Improvements\n## DSN Bootcamp Challenge: Sales Forecasting\n\n**Milestone**: 5 - Model Improvements\n\n**Objective**: Improve the baseline LightGBM model with feature engineering, target encoding, and model ensemble tuning.\n\nThis notebook is designed to produce a Kaggle-compatible submission with the exact required schema: `id,total_sales`.\n'
     ),
     nbf.v4.new_markdown_cell('## 1. Setup & Imports'),
     nbf.v4.new_code_cell(
@@ -112,7 +112,7 @@ test_df['store_size_rank'] = test_df['store_size'].map(size_map)
 train_df['tier_rank'] = train_df['store_location_tier'].map(tier_map)
 test_df['tier_rank'] = test_df['store_location_tier'].map(tier_map)
 
-for col in ['store_mean_sales', 'store_std_sales', 'store_median_sales', 'product_mean_sales', 'product_std_sales', 'product_median_sales', 'category_mean_sales', 'category_std_sales', 'category_median_sales', 'price_to_category_mean', 'price_to_store_mean', 'weight_price_ratio', 'store_size_rank', 'tier_rank']:
+for col in ['store_mean_sales', 'store_std_sales', 'store_median_sales', 'product_mean_sales', 'product_std_sales', 'product_median_sales', 'category_mean_sales', 'category_std_sales', 'category_median_sales']:
     train_df[col] = train_df[col].fillna(train_df[col].median())
     test_df[col] = test_df[col].fillna(test_df[col].median())
 
@@ -346,7 +346,7 @@ print('Ensemble pred min/max:', round(ensemble_pred.min(), 2), round(ensemble_pr
     nbf.v4.new_code_cell(
         """submission_df = pd.DataFrame({
     'id': test_df['id'].values,
-    'predicted_sales': ensemble_pred
+    'total_sales': ensemble_pred
 })
 
 os.makedirs(repo_root / 'submissions', exist_ok=True)
@@ -354,10 +354,12 @@ submission_path = repo_root / 'submissions' / 'submission_v3.csv'
 submission_df.to_csv(submission_path, index=False)
 print('Saved submission:', submission_path)
 print(submission_df.head().to_string(index=False))
+
+assert list(submission_df.columns) == ['id', 'total_sales']
 """
     ),
     nbf.v4.new_markdown_cell(
-        '## 14. Summary\n\nThis notebook follows the project plan in PROGRESS.md by improving the baseline with engineered features, strict time-series validation, Optuna tuning, and a simple ensemble path. The main rule remains unchanged: all comparisons must be evaluated using time-aware validation to avoid leakage.\n'
+        '## 14. Summary\n\nThis notebook follows the project plan in PROGRESS.md by improving the baseline with engineered features, strict time-series validation, Optuna tuning, and a simple ensemble. It saves a Kaggle-compatible CSV with the required `id,total_sales` schema.\n'
     ),
 ]
 
